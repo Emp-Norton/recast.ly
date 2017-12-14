@@ -31,8 +31,8 @@ class App extends React.Component {
   //   });
   // }  
  
-  componentWillMount() {
-    window.searchYouTube({max: 5, query: this.props.searchYouTube, key: window.YOUTUBE_API_KEY}, this.setState.bind(this));
+  componentDidMount() {
+    this.props.searchYouTube({max: 5, query: 'Cute cat video', key: window.YOUTUBE_API_KEY}, this.setState.bind(this));
   }
 
   handlerSelectVideo(video) {

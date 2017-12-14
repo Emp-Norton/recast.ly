@@ -26,7 +26,4 @@ var searchYouTube = (options, callback) => {
   });
 };
 
-handleUpdate 
-
-
 window.searchYouTube = searchYouTube;

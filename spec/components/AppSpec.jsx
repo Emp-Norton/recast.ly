@@ -52,6 +52,7 @@ describe('App', function() {
     beforeEach(function() {
       searchYouTubeStub = sinon.stub();
       searchYouTubeStub.yields(window.fakeVideoData);
+      console.dir(searchYouTubeStub);
       app = renderIntoDocument(
         <App searchYouTube={searchYouTubeStub} />
       );

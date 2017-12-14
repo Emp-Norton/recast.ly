@@ -1,10 +1,30 @@
 class App extends React.Component {
- constructor(props) {
-   super(props);
-   this.state = {
-     video: window.exampleVideoData[0]
+  constructor(props) {
+    super(props);
+    this.state = {
+      video: window.exampleVideoData[0]
    };
  }
+
+  getVideos (query) {
+    $.ajax({
+      url: 'https://www.googleapis.com/youtube/v3/search',
+      type: 'GET',
+      data: {'maxResults': '5',
+      key: window.YOUTUBE_API_KEY,
+      part: 'snippet',
+      q: query,
+      type: ''},
+      
+      success: function(data) {
+        console.log('success!', data)
+      },
+      error: function(data) {
+        console.error("Failed", data);
+      }   
+    });
+  }  
+ 
 
  handlerSelectVideo(video) {
    console.log(video);
@@ -34,3 +54,6 @@ class App extends React.Component {
    );
  }
 }
+
+
+

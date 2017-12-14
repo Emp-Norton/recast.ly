@@ -6,37 +6,37 @@ class App extends React.Component {
       videoCollection: window.exampleVideoData
     };
   // this.state.videoCollection = this.searchYouTube('Hack Reactor');
-    console.log(this.state);
+  //  console.log(this.state);
   }
 
-  searchYouTube (query) { // change to searchYouTube ?
-    var self = this;
-    $.ajax({
-      url: 'https://www.googleapis.com/youtube/v3/search',
-      type: 'GET',
-      data: {
-        'maxResults': '5',
-        'key': window.YOUTUBE_API_KEY, 
-        'part': 'snippet',
-        'q': query,
-        'type': ''
-      },
-      success: function(data) {
-        console.log('success!', data);
-        self.setState({videoCollection: data.items});
-      },
-      error: function(data) {
-        console.error('Failed', data);
-      }   
-    });
-  }  
+  // searchYouTube (query) { // change to searchYouTube ?
+  //   var self = this;
+  //   $.ajax({
+  //     url: 'https://www.googleapis.com/youtube/v3/search',
+  //     type: 'GET',
+  //     data: {
+  //       'maxResults': '5',
+  //       'key': window.YOUTUBE_API_KEY, 
+  //       'part': 'snippet',
+  //       'q': query,
+  //       'type': ''
+  //     },
+  //     success: function(data) {
+  //       console.log('success!', data);
+  //       self.setState({videoCollection: data.items});
+  //     },
+  //     error: function(data) {
+  //       console.error('Failed', data);
+  //     }   
+  //   });
+  // }  
  
-  componentDidMount() {
-    this.searchYouTube('James');
+  componentWillMount() {
+    window.searchYouTube({max: 5, query: this.props.searchYouTube, key: window.YOUTUBE_API_KEY}, this.setState.bind(this));
   }
 
   handlerSelectVideo(video) {
-    console.log(video);
+  //  console.log(video);
     this.setState({
       video: video
     });
@@ -48,7 +48,7 @@ class App extends React.Component {
      <div>
        <nav className="navbar">
          <div className="col-md-6 offset-md-3">
-           <Search search={this.searchYouTube.bind(this)} />
+          <Search search={window.searchYouTube.bind(this)} bind={this.setState.bind(this)} /> 
          </div>
        </nav>
        <div className="row">

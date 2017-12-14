@@ -39,7 +39,7 @@ class App extends React.Component {
      <div>
        <nav className="navbar">
          <div className="col-md-6 offset-md-3">
-           <Search />
+           <Search search={this.getVideos} />
          </div>
        </nav>
        <div className="row">

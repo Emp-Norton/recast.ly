@@ -5,9 +5,11 @@ class App extends React.Component {
       video: window.exampleVideoData[0],
       videoCollection: window.exampleVideoData
     };
+  // this.state.videoCollection = this.searchYouTube('Hack Reactor');
+    console.log(this.state);
   }
 
-  getVideos (query) {
+  searchYouTube (query) { // change to searchYouTube ?
     var self = this;
     $.ajax({
       url: 'https://www.googleapis.com/youtube/v3/search',
@@ -29,6 +31,9 @@ class App extends React.Component {
     });
   }  
  
+  componentDidMount() {
+    this.searchYouTube('James');
+  }
 
   handlerSelectVideo(video) {
     console.log(video);
@@ -43,7 +48,7 @@ class App extends React.Component {
      <div>
        <nav className="navbar">
          <div className="col-md-6 offset-md-3">
-           <Search search={this.getVideos.bind(this)} />
+           <Search search={this.searchYouTube.bind(this)} />
          </div>
        </nav>
        <div className="row">
@@ -58,6 +63,8 @@ class App extends React.Component {
     );
   }
 }
+
+window.App = App;
 
 
 

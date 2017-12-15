@@ -1,39 +1,35 @@
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       video: window.exampleVideoData[0],
       videoCollection: window.exampleVideoData
     };
-  // this.state.videoCollection = this.searchYouTube('Hack Reactor');
-  //  console.log(this.state);
-  }
 
-  // searchYouTube (query) { // change to searchYouTube ?
-  //   var self = this;
-  //   $.ajax({
-  //     url: 'https://www.googleapis.com/youtube/v3/search',
-  //     type: 'GET',
-  //     data: {
-  //       'maxResults': '5',
-  //       'key': window.YOUTUBE_API_KEY, 
-  //       'part': 'snippet',
-  //       'q': query,
-  //       'type': ''
-  //     },
-  //     success: function(data) {
-  //       console.log('success!', data);
-  //       self.setState({videoCollection: data.items});
-  //     },
-  //     error: function(data) {
-  //       console.error('Failed', data);
-  //     }   
-  //   });
-  // }  
+    this.getYouTubeVideos = this.getYouTubeVideos.bind(this);
+    this.handlerSelectVideo = this.handlerSelectVideo.bind(this);
+    
+  }
  
   componentDidMount() {
-    this.props.searchYouTube({max: 5, query: 'Cute cat video', key: window.YOUTUBE_API_KEY}, this.setState.bind(this));
+    this.getYouTubeVideos('Cute cat video');
   }
+
+  getYouTubeVideos(query) {
+    var options = {
+      key: window.YOUTUBE_API_KEY,
+      query: query
+    };
+
+    this.props.searchYouTube(options, (videos) => {
+      this.setState({
+        videoCollection: videos,
+        video: videos[0]
+      });
+    });
+  }
+
 
   handlerSelectVideo(video) {
   //  console.log(video);
@@ -48,15 +44,22 @@ class App extends React.Component {
      <div>
        <nav className="navbar">
          <div className="col-md-6 offset-md-3">
-          <Search search={window.searchYouTube.bind(this)} bind={this.setState.bind(this)} /> 
+          <Search 
+            search={this.getYouTubeVideos} 
+          /> 
          </div>
        </nav>
        <div className="row">
          <div className="col-md-7">
-           <VideoPlayer video={this.state.video}/>
+           <VideoPlayer 
+            video={this.state.video}
+          />
          </div>
          <div className="col-md-5">
-           <VideoList videos={this.state.videoCollection} handler={this.handlerSelectVideo.bind(this)}/>
+           <VideoList 
+            videos={this.state.videoCollection} 
+            handler={this.handlerSelectVideo}
+          />
          </div>
        </div>
      </div>
